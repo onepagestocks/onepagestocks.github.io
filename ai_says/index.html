@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All AI Picks</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem;
+            background: #f8f9fa;
+            color: #333;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #212529;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Tabs Container */
+        .tabs-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Ensures rounded corners are visible */
+            margin-top: 2rem;
+        }
+
+        /* Tab Headers (Navigation) */
+        .tab-headers {
+            display: flex;
+            background-color: #e9ecef;
+            border-bottom: 1px solid #dee2e6;
+            flex-wrap: wrap; /* Allows tabs to wrap on smaller screens */
+        }
+
+        .tab-button {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #495057;
+            transition: all 0.3s ease;
+            flex-grow: 1; /* Allows buttons to grow and fill space */
+            text-align: center;
+        }
+
+        .tab-button:hover {
+            background-color: #e2e6ea;
+            color: #212529;
+        }
+
+        .tab-button.active {
+            background-color: #fff;
+            color: #007bff; /* Primary brand color */
+            border-bottom: 3px solid #007bff;
+            padding-bottom: calc(1rem - 3px); /* Adjust padding to keep height consistent */
+        }
+
+        /* Tab Content Areas */
+        .tab-content {
+            padding: 1.5rem;
+            display: none; /* Hidden by default */
+        }
+
+        .tab-content.active {
+            display: block; /* Shown when active */
+        }
+
+        /* Loading and Error States */
+        #loading-message, #error-message {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+        }
+
+        /* Back to Home Link */
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #0d6efd;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 AI picks</h1>
+    <p>Latest reports with visual insights.</p>
+
+    <div class="tabs-container">
+        <div class="tab-headers" id="tab-headers">
+            <span id="loading-message">Loading reports...</span>
+            <span id="error-message" style="display: none;">Failed to load reports.</span>
+        </div>
+        <div class="tab-contents" id="tab-contents">
+            </div>
+    </div>
+
+    <p><a href="/" class="back-link">← Back to Home</a></p>
+
+    <script>
+        const tabHeadersContainer = document.getElementById('tab-headers');
+        const tabContentsContainer = document.getElementById('tab-contents');
+        const loadingMessage = document.getElementById('loading-message');
+        const errorMessage = document.getElementById('error-message');
+
+        let activeTabButton = null;
+        let activeTabContent = null;
+
+        // Function to show a specific tab
+        function showTab(tabId, buttonElement) {
+            // Deactivate current active tab if any
+            if (activeTabButton) {
+                activeTabButton.classList.remove('active');
+            }
+            if (activeTabContent) {
+                activeTabContent.classList.remove('active');
+            }
+
+            // Activate the clicked tab button
+            buttonElement.classList.add('active');
+            activeTabButton = buttonElement;
+
+            // Show the corresponding content
+            const targetContent = document.getElementById(tabId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+                activeTabContent = targetContent;
+            }
+        }
+
+        fetch('../indices/stocks_index.json')
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                loadingMessage.style.display = 'none'; // Hide loading message
+
+                if (data.length === 0) {
+                    tabHeadersContainer.innerHTML = '<span style="padding: 1rem;">No reports found.</span>';
+                    return;
+                }
+
+                data.forEach((filename, index) => {
+                    const tabId = `tab-${index}`; // Unique ID for each tab content
+                    const cleanName = filename.replace(/\.html$/, '').replace(/_/g, ' ');
+
+                    // Create Tab Button
+                    const tabButton = document.createElement('button');
+                    tabButton.className = 'tab-button';
+                    tabButton.textContent = cleanName;
+                    tabButton.setAttribute('data-tab-id', tabId); // Store target content ID
+                    tabHeadersContainer.appendChild(tabButton);
+
+                    // Create Tab Content Placeholder (will load actual HTML later)
+                    const tabContentDiv = document.createElement('div');
+                    tabContentDiv.id = tabId;
+                    tabContentDiv.className = 'tab-content';
+                    tabContentsContainer.appendChild(tabContentDiv);
+
+                    // Add click listener to button
+                    tabButton.addEventListener('click', () => {
+                        showTab(tabId, tabButton);
+
+                        // Load the HTML content for this tab only when it's first clicked
+                        // and not already loaded (simple check: if innerHTML is empty)
+                        if (tabContentDiv.innerHTML === '') {
+                             tabContentDiv.innerHTML = `<p>Loading ${cleanName} report...</p>`; // Placeholder
+                            fetch(filename)
+                                .then(res => res.text())
+                                .then(htmlContent => {
+                                    tabContentDiv.innerHTML = htmlContent;
+                                })
+                                .catch(err => {
+                                    tabContentDiv.innerHTML = `<p>Failed to load ${cleanName} report.</p>`;
+                                    console.error(`Error loading ${filename}:`, err);
+                                });
+                        }
+                    });
+
+                    // Activate the first tab by default
+                    if (index === 0) {
+                        showTab(tabId, tabButton);
+                        // Also load content for the first tab immediately
+                        fetch(filename)
+                            .then(res => res.text())
+                            .then(htmlContent => {
+                                tabContentDiv.innerHTML = htmlContent;
+                            })
+                            .catch(err => {
+                                tabContentDiv.innerHTML = `<p>Failed to load ${cleanName} report.</p>`;
+                                console.error(`Error loading ${filename}:`, err);
+                            });
+                    }
+                });
+            })
+            .catch(err => {
+                loadingMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+                console.error('Error fetching stocks_index.json:', err);
+            });
+    </script>
+</body>
+</html>
