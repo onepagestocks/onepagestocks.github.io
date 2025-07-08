@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnePageStocks: AI-Powered Investing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+                max-height: 500px;
+            }
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #577590, #277DA1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .kpi-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid #43AA8B;
+            color: #43AA8B;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            min-height: 100px;
+            font-weight: 600;
+            position: relative;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #43AA8B;
+            margin: 0 1rem;
+        }
+        .section-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-12 md:mb-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold gradient-text mb-2">OnePageStocks</h1>
+            <p class="text-lg md:text-xl text-gray-600">Smarter Investing, Simplified by Agentic AI</p>
+        </header>
+
+        <section id="introduction" class="mb-12 md:mb-20">
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-10">
+                <h2 class="text-3xl font-bold text-center mb-4 text-[#577590]">The Relentless Pursuit of Financial Well-being</h2>
+                <p class="text-center text-gray-700 max-w-4xl mx-auto leading-relaxed">
+                    In today's world, the chase for a comfortable life, quality healthcare, and a secure future is constant. A powerful, silent force—inflation—continuously erodes our hard-earned money's value. While saving is essential, it's often not enough. History shows that investing in the stock market is one of the most effective strategies to outpace inflation and build real wealth. However, the complexity of the market and the hidden costs of options like mutual funds leave many aspiring investors feeling lost. OnePageStocks is here to change that.
+                </p>
+            </div>
+        </section>
+
+        <section id="financial-reality" class="mb-12 md:mb-20">
+            <h2 class="text-3xl font-bold text-center mb-6 text-[#577590]">The Financial Reality: Markets vs. Inflation in India</h2>
+             <p class="text-center text-gray-700 max-w-3xl mx-auto mb-8 leading-relaxed">
+                A look at the numbers reveals a clear story. While inflation steadily chips away at value, the stock market has historically offered returns that far exceed it, demonstrating its power as a wealth creation engine. This chart compares the annual returns of India's Nifty 50 index against the consumer price inflation rate.
+            </p>
+            <div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                 <div class="chart-container">
+                    <canvas id="marketVsInflationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="mb-12 md:mb-20">
+            <h2 class="text-3xl font-bold text-center mb-6 text-[#577590]">Our Solution: Agentic AI for Every Investor</h2>
+             <p class="text-center text-gray-700 max-w-3xl mx-auto mb-10 leading-relaxed">
+                The problem isn't a lack of data; it's a lack of clarity. OnePageStocks cuts through the noise by deploying a team of autonomous AI agents, powered by Google's Gemini. Each agent is designed to "think" like a legendary investor, analyzing companies from different, proven perspectives.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="kpi-card">
+                     <div class="section-icon text-[#F94144]">🧠</div>
+                    <h3 class="text-xl font-bold mb-2">The "Graham" Agent</h3>
+                    <p>Focuses on deep value, seeking stocks with a significant margin of safety based on metrics like low P/E and P/B ratios.</p>
+                </div>
+                <div class="kpi-card">
+                     <div class="section-icon text-[#F8961E]">🏰</div>
+                    <h3 class="text-xl font-bold mb-2">The "Buffett" Agent</h3>
+                    <p>Identifies high-quality companies with durable competitive advantages (economic moats) and consistent profitability.</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="section-icon text-[#90BE6D]">📈</div>
+                    <h3 class="text-xl font-bold mb-2">The "Lynch" Agent</h3>
+                    <p>Hunts for growth at a reasonable price (GARP), analyzing earnings growth relative to valuation.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="how-it-works" class="mb-12 md:mb-20">
+            <h2 class="text-3xl font-bold text-center mb-10 text-[#577590]">How It Works: From Data to Decision</h2>
+            <p class="text-center text-gray-700 max-w-3xl mx-auto mb-12 leading-relaxed">
+                Our system follows a sophisticated yet transparent process. The AI agents work in concert to ingest, analyze, and synthesize information, transforming raw data into a clear, actionable report. This structured workflow ensures every insight is comprehensive and well-grounded.
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-4">
+                <div class="flow-step w-full md:w-1/5">1. Ingest & Process Raw Data</div>
+                <div class="hidden md:block flow-arrow">➔</div>
+                <div class="block md:hidden text-4xl text-[#43AA8B]">↓</div>
+                <div class="flow-step w-full md:w-1/5">2. Apply Investor Lenses via AI Agents</div>
+                 <div class="hidden md:block flow-arrow">➔</div>
+                <div class="block md:hidden text-4xl text-[#43AA8B]">↓</div>
+                <div class="flow-step w-full md:w-1/5">3. Synthesize Insights & Calculate Key Metrics</div>
+                 <div class="hidden md:block flow-arrow">➔</div>
+                <div class="block md:hidden text-4xl text-[#43AA8B]">↓</div>
+                <div class="flow-step w-full md:w-1/5">4. Generate One-Page Stock Report</div>
+            </div>
+        </section>
+
+        <section id="impact" class="mb-12 md:mb-20">
+            <h2 class="text-3xl font-bold text-center mb-6 text-[#577590]">The Impact: Empowering Your Financial Future</h2>
+            <p class="text-center text-gray-700 max-w-3xl mx-auto mb-10 leading-relaxed">
+                By automating deep analysis and presenting it simply, OnePageStocks transforms the investment landscape for the retail investor, fostering confidence and enabling smarter decisions.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div class="kpi-card">
+                    <p class="text-4xl font-extrabold text-[#277DA1]">Democratized</p>
+                    <p class="font-semibold text-gray-600">Access to elite-level fundamental analysis.</p>
+                </div>
+                 <div class="kpi-card">
+                    <p class="text-4xl font-extrabold text-[#43AA8B]">Reduced</p>
+                    <p class="font-semibold text-gray-600">Emotional bias through data-driven insights.</p>
+                </div>
+                <div class="kpi-card">
+                    <p class="text-4xl font-extrabold text-[#F9A62C]">Streamlined</p>
+                    <p class="font-semibold text-gray-600">Stock selection process, saving hours of research.</p>
+                </div>
+                <div class="kpi-card">
+                    <p class="text-4xl font-extrabold text-[#F94144]">Enhanced</p>
+                    <p class="font-semibold text-gray-600">Portfolio quality with a focus on strong fundamentals.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tech-stack">
+            <h2 class="text-3xl font-bold text-center mb-6 text-[#577590]">Technology Powering the Future</h2>
+             <p class="text-center text-gray-700 max-w-3xl mx-auto mb-10 leading-relaxed">
+               Our platform is built on a foundation of cutting-edge, scalable technologies to deliver reliable and intelligent analysis.
+            </p>
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <p class="text-5xl">☁️</p>
+                        <h3 class="font-bold mt-2 text-lg">Google Cloud</h3>
+                        <p class="text-sm text-gray-600">For scalable compute, data, and orchestration.</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl">💎</p>
+                        <h3 class="font-bold mt-2 text-lg">agentic AI</h3>
+                        <p class="text-sm text-gray-600">The core engine for advanced reasoning & analysis.</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl">🐍</p>
+                        <h3 class="font-bold mt-2 text-lg">Python</h3>
+                        <p class="text-sm text-gray-600">For data science, backend logic, and agent frameworks.</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl">💾</p>
+                        <h3 class="font-bold mt-2 text-lg">Databases</h3>
+                         <p class="text-sm text-gray-600">PostgreSQL & MongoDB for robust data management.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    
+    <footer class="text-center p-6 mt-10 border-t border-gray-200">
+        <p class="text-gray-500">&copy; 2025 OnePageStocks. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const wrapLabel = (label) => {
+            const maxLength = 16;
+            if (label.length <= maxLength) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).length > maxLength) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine += (currentLine ? ' ' : '') + word;
+                }
+            }
+            if (currentLine) {
+                lines.push(currentLine);
+            }
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            } else {
+              return label;
+            }
+        };
+
+        const chartData = {
+            labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+            datasets: [
+                {
+                    label: 'Nifty 50 Annual Return (%)',
+                    data: [31.39, -4.06, 3.01, 28.65, 3.15, 12.02, 14.90, 24.12, 4.32, 19.42],
+                    backgroundColor: '#43AA8B',
+                    borderColor: '#43AA8B',
+                    type: 'bar',
+                    yAxisID: 'y',
+                    order: 2,
+                },
+                {
+                    label: 'CPI Inflation Rate (%)',
+                    data: [6.67, 4.91, 4.95, 3.33, 3.94, 3.73, 6.62, 5.13, 6.70, 5.65],
+                    backgroundColor: '#F94144',
+                    borderColor: '#F94144',
+                    type: 'line',
+                    yAxisID: 'y',
+                    order: 1,
+                    tension: 0.3,
+                }
+            ]
+        };
+
+        const marketVsInflationCtx = document.getElementById('marketVsInflationChart').getContext('2d');
+        new Chart(marketVsInflationCtx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Nifty 50 Returns vs. Inflation Rate in India (2014-2023)',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                         ticks: {
+                            callback: function(value) {
+                                return value + '%'
+                            }
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    },
+                }
+            }
+        });
+    </script>
+</body>
+</html>
