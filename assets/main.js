@@ -70,7 +70,7 @@ fetch('./indices/sectoral_index.json')
     const catchSection = document.getElementById('the-catch');
     if (catchSection && latest) {
       catchSection.innerHTML = `
-        <h3><a href="./sectoral/${latest}" class="report-button">1. The Catch</a></h3>
+        <h3 class="text-2xl font-semibold mb-2 text-blue-800"><a href="./sectoral/${latest}" class="report-button">1. The Catch</a></h3>
         <p><a href="./sectoral/${latest}" class="report-button">
           Begin with our Sectoral Report to cast a wide net, see sectors on the move.
         </a></p>
