@@ -36,7 +36,7 @@ fetch('./indices/index.json')
     if (cullSection && reports.length > 0) {
       const latestWeekly = reports[0];
       cullSection.innerHTML = `
-        <h3><a href="./reports/${latestWeekly}" class="report-button">2. The Cull</a></h3>
+        <h3><a href="./reports/${latestWeekly}" class="report-button">2. The Keepers</a></h3>
         <p><a href="./reports/${latestWeekly}" class="report-button">
           Use the Weekly Reports to cull specific momentum stocks showing promise within those hot sectors.
         </a></p>
