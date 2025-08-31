@@ -1,35 +1,52 @@
-// Fetch latest weekly reports and update #reports-container and "2. The Cull" section
+// Fetch latest weekly reports and update relevant sections
 fetch('./indices/index.json')
-  .then(response => response.json())
-  .then(reports => {
-    // Update #reports-container with latest reports links (existing UI block)
-    const container = document.getElementById('reports-container');
-    container.innerHTML = '';
-    if (reports.length === 0) {
-      container.innerHTML = '<p>No reports available yet.</p>';
-    } else {
-      const latest = reports[0];
-      const dateMatch = latest.match(/(\d{4}-\d{2}-\d{2})/);
-      const date = dateMatch ? dateMatch[1] : '';
+  .then(response => response.json())
+  .then(reports => {
+    // Update #reports-container with latest reports links
+    const container = document.getElementById('reports-container');
+    if (container) {
+      container.innerHTML = '';
+      if (reports.length === 0) {
+        container.innerHTML = '<p>No reports available yet.</p>';
+      } else {
+        const latest = reports[0];
+        const dateMatch = latest.match(/(\d{4}-\d{2}-\d{2})/);
+        const date = dateMatch ? dateMatch[1] : '';
 
-      const latestLink = document.createElement('a');
-      latestLink.href = `./reports/${latest}`;
-      latestLink.textContent = `Latest Report → ${date}`;
-      latestLink.className = 'report-button';
+        const latestLink = document.createElement('a');
+        latestLink.href = `./reports/${latest}`;
+        latestLink.textContent = `Latest Report → ${date}`;
+        latestLink.className = 'report-button';
 
-      const latestCard = document.createElement('div');
-      latestCard.className = 'card bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 hover:shadow-lg';
-      latestCard.innerHTML = `<p class="mb-4">Check out the latest HTML report with visual analysis and insights.</p>`;
-      latestCard.appendChild(latestLink);
+        const latestCard = document.createElement('div');
+        latestCard.className = 'card bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 hover:shadow-lg';
+        latestCard.innerHTML = `<p class="mb-4">Check out the latest HTML report with visual analysis and insights.</p>`;
+        latestCard.appendChild(latestLink);
 
-      const allReportsLink = document.createElement('a');
-      allReportsLink.href = './reports/';
-      allReportsLink.textContent = 'View All Reports →';
-      allReportsLink.className = 'report-button mt-4';
+        const allReportsLink = document.createElement('a');
+        allReportsLink.href = './reports/';
+        allReportsLink.textContent = 'View All Reports →';
+        allReportsLink.className = 'report-button mt-4';
 
-      container.appendChild(latestCard);
-      container.appendChild(allReportsLink);
-    }
+        container.appendChild(latestCard);
+        container.appendChild(allReportsLink);
+      }
+    }
+
+    // Update "2. The Keepers" section to be a clickable link
+    if (reports.length > 0) {
+      const latestWeekly = reports[0];
+      const cullCard = document.querySelector('#the-cull').parentElement; // Get the parent 'fish-card' div
+      const link = document.createElement('a');
+      link.href = `./reports/${latestWeekly}`;
+      link.className = 'block'; // Make the link a block to wrap the content
+      link.innerHTML = cullCard.innerHTML; // Copy the inner HTML of the card
+      cullCard.innerHTML = ''; // Clear the card
+      cullCard.appendChild(link); // Append the link
+    }
+  })
+  .catch(error => console.error('Error fetching reports:', error));
+
 
     // Update "2. The Cull" section in main content to link to the latest weekly report
     const cullSection = document.getElementById('the-cull');
