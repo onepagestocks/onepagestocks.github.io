@@ -39,7 +39,10 @@ fetch('./indices/index.json')
       const keepersSection = document.getElementById('the-keepers');
       if (keepersSection) {
         keepersSection.innerHTML = `
-          <h3><a href="./reports/${latestWeekly}" class="report-button">2. The Keepers</a></h3>
+          <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center bg-blue-500 bg-opacity-30">
+                        <span class="text-4xl fish-icon">🔎</span>
+                    </div>
+          <h3 class="text-2xl font-semibold mb-2 text-blue-800"><a href="./reports/${latestWeekly}" class="report-button">2. The Keepers</a></h3>
           <p><a href="./reports/${latestWeekly}" class="report-button">
             Use the Weekly Reports to cull specific momentum stocks showing promise within those hot sectors.
           </a></p>
@@ -74,6 +77,9 @@ fetch('./indices/sectoral_index.json')
     const catchSection = document.getElementById('the-catch');
     if (catchSection && latest) {
       catchSection.innerHTML = `
+      <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center bg-blue-500 bg-opacity-30">
+                        <span class="text-4xl fish-icon">🎣</span>
+                    </div>
         <h3 class="text-2xl font-semibold mb-2 text-blue-800">
           <a href="./sectoral/${latest}" class="report-button">1. The Catch</a>
         </h3>
