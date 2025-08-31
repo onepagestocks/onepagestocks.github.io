@@ -2,8 +2,8 @@
 fetch('./indices/index.json')
   .then(response => response.json())
   .then(reports => {
-    // Update #reports-container with latest reports links
-    const container = document.getElementById('reports-container');
+    // Update #weekly-report with latest reports links
+    const container = document.getElementById('weekly-report');
     if (container) {
       container.innerHTML = '';
       if (reports.length === 0) {
@@ -36,7 +36,7 @@ fetch('./indices/index.json')
     // Update "2. The Keepers" section to be a clickable link
     if (reports.length > 0) {
       const latestWeekly = reports[0];
-      const cullCard = document.querySelector('#the-cull').parentElement; // Get the parent 'fish-card' div
+      const cullCard = document.querySelector('#the-keepers').parentElement; // Get the parent 'fish-card' div
       const link = document.createElement('a');
       link.href = `./reports/${latestWeekly}`;
       link.className = 'block'; // Make the link a block to wrap the content
@@ -48,11 +48,11 @@ fetch('./indices/index.json')
   .catch(error => console.error('Error fetching reports:', error));
 
 
-    // Update "2. The Cull" section in main content to link to the latest weekly report
-    const cullSection = document.getElementById('the-cull');
-    if (cullSection && reports.length > 0) {
+    // Update "2. The Keepers" section in main content to link to the latest weekly report
+    const keepersSection = document.getElementById('the-keepers');
+    if (keepersSection && reports.length > 0) {
       const latestWeekly = reports[0];
-      cullSection.innerHTML = `
+      keepersSection.innerHTML = `
         <h3><a href="./reports/${latestWeekly}" class="report-button">2. The Keepers</a></h3>
         <p><a href="./reports/${latestWeekly}" class="report-button">
           Use the Weekly Reports to cull specific momentum stocks showing promise within those hot sectors.
