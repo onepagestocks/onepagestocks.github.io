@@ -1,63 +1,50 @@
 // Fetch latest weekly reports and update relevant sections
 fetch('./indices/index.json')
-  .then(response => response.json())
-  .then(reports => {
-    // Update #weekly-report with latest reports links
-    const container = document.getElementById('weekly-report');
-    if (container) {
-      container.innerHTML = '';
-      if (reports.length === 0) {
-        container.innerHTML = '<p>No reports available yet.</p>';
-      } else {
-        const latest = reports[0];
-        const dateMatch = latest.match(/(\d{4}-\d{2}-\d{2})/);
-        const date = dateMatch ? dateMatch[1] : '';
+  .then(response => response.json())
+  .then(reports => {
+    const container = document.getElementById('weekly-report');
 
-        const latestLink = document.createElement('a');
-        latestLink.href = `./reports/${latest}`;
-        latestLink.textContent = `Latest Report → ${date}`;
-        latestLink.className = 'report-button';
+    if (container) {
+      container.innerHTML = '';
+      if (reports.length === 0) {
+        container.innerHTML = '<p>No reports available yet.</p>';
+      } else {
+        const latest = reports[0];
+        const dateMatch = latest.match(/(\d{4}-\d{2}-\d{2})/);
+        const date = dateMatch ? dateMatch[1] : '';
 
-        const latestCard = document.createElement('div');
-        latestCard.className = 'card bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 hover:shadow-lg';
-        latestCard.innerHTML = `<p class="mb-4">Check out the latest HTML report with visual analysis and insights.</p>`;
-        latestCard.appendChild(latestLink);
+        const latestLink = document.createElement('a');
+        latestLink.href = `./reports/${latest}`;
+        latestLink.textContent = `Latest Report → ${date}`;
+        latestLink.className = 'report-button';
 
-        const allReportsLink = document.createElement('a');
-        allReportsLink.href = './reports/';
-        allReportsLink.textContent = 'View All Reports →';
-        allReportsLink.className = 'report-button mt-4';
+        const latestCard = document.createElement('div');
+        latestCard.className = 'card bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 hover:shadow-lg';
+        latestCard.innerHTML = `<p class="mb-4">Check out the latest HTML report with visual analysis and insights.</p>`;
+        latestCard.appendChild(latestLink);
 
-        container.appendChild(latestCard);
-        container.appendChild(allReportsLink);
-      }
-    }
+        const allReportsLink = document.createElement('a');
+        allReportsLink.href = './reports/';
+        allReportsLink.textContent = 'View All Reports →';
+        allReportsLink.className = 'report-button mt-4';
 
-    // Update "2. The Keepers" section to be a clickable link
-    if (reports.length > 0) {
-      const latestWeekly = reports[0];
-      const cullCard = document.querySelector('#the-keepers').parentElement; // Get the parent 'fish-card' div
-      const link = document.createElement('a');
-      link.href = `./reports/${latestWeekly}`;
-      link.className = 'block'; // Make the link a block to wrap the content
-      link.innerHTML = cullCard.innerHTML; // Copy the inner HTML of the card
-      cullCard.innerHTML = ''; // Clear the card
-      cullCard.appendChild(link); // Append the link
-    }
-  })
-  .catch(error => console.error('Error fetching reports:', error));
+        container.appendChild(latestCard);
+        container.appendChild(allReportsLink);
+      }
+    }
 
-
-    // Update "2. The Keepers" section in main content to link to the latest weekly report
-    const keepersSection = document.getElementById('the-keepers');
-    if (keepersSection && reports.length > 0) {
+    // ✅ Update "2. The Keepers" section
+    if (reports.length > 0) {
       const latestWeekly = reports[0];
-      keepersSection.innerHTML = `
-        <h3><a href="./reports/${latestWeekly}" class="report-button">2. The Keepers</a></h3>
-        <p><a href="./reports/${latestWeekly}" class="report-button">
-          Use the Weekly Reports to cull specific momentum stocks showing promise within those hot sectors.
-        </a></p>
-      `;
+      const keepersSection = document.getElementById('the-keepers');
+      if (keepersSection) {
+        keepersSection.innerHTML = `
+          <h3><a href="./reports/${latestWeekly}" class="report-button">2. The Keepers</a></h3>
+          <p><a href="./reports/${latestWeekly}" class="report-button">
+            Use the Weekly Reports to cull specific momentum stocks showing promise within those hot sectors.
+          </a></p>
+        `;
+      }
     }
   })
   .catch(error => {
@@ -83,11 +70,13 @@ fetch('./indices/sectoral_index.json')
       reportCard.innerHTML += '<p>No report found.</p>';
     }
 
-    // Update "1. The Catch" section in main content to link to latest sectoral report
+    // ✅ Update "1. The Catch" section
     const catchSection = document.getElementById('the-catch');
     if (catchSection && latest) {
       catchSection.innerHTML = `
-        <h3 class="text-2xl font-semibold mb-2 text-blue-800"><a href="./sectoral/${latest}" class="report-button">1. The Catch</a></h3>
+        <h3 class="text-2xl font-semibold mb-2 text-blue-800">
+          <a href="./sectoral/${latest}" class="report-button">1. The Catch</a>
+        </h3>
         <p><a href="./sectoral/${latest}" class="report-button">
           Begin with our Sectoral Report to cast a wide net, see sectors on the move.
         </a></p>
